@@ -1,0 +1,347 @@
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, user-scalable=no"
+/>
+<style>
+  body {
+    margin: 0;
+    background-color: black;
+    display: flex;
+    height: 100vh;
+    position: absolute;
+    font-family: sans-serif;
+  }
+  h1 {
+    color: black;
+  }
+  span {
+    color: white;
+    position: absolute;
+  }
+  .choose:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+    border-radius: 5px;
+  } 
+  button {
+    background-color: black;
+  }
+  ::placeholder {
+  color: white;
+  }
+</style>
+   
+<button class="choose" id="chooseFirst" style="border-radius: 5px; border: none; cursor: none; display: none; position: absolute;  max-height: 50%; height: 100%; max-width: 50%; width: 100%;">
+  <div>
+    <h1 id="q1" style="color: white;"></h1>
+  </div>
+</button>
+<button class="choose" id="chooseSecond" style="border-radius: 5px; border: none; cursor: none; display: none; position: absolute; left: 50%; max-height: 50%; height: 100%; max-width: 50%; width: 100%;">
+  <div>
+    <h1 id="q2" style="color: white;"></h1>
+  </div>
+</button>
+<button class="choose" id="chooseThird" style="border-radius: 5px; border: none; cursor: none; display: none; position: absolute; top: 50%; max-height: 50%; height: 100%; max-width: 50%; width: 100%;">
+  <div>
+    <h1 id="q3" style="color: white;"></h1>
+  </div>
+</button>
+<button class="choose" id="chooseFourth" style="border-radius: 5px; border: none; cursor: none; display: none; position: absolute; top: 50%; left: 50%; max-height: 50%; height: 100%; max-width: 50%; width: 100%;">
+  <div>
+    <h1 id="q4" style="color: white;"></h1>
+  </div>
+</button>
+
+<div 
+  id="gameOver"
+  style="
+    position: absolute; 
+    background-color: white;
+    padding: 20px;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    border-radius: 5px;
+    display: none;
+  "
+>
+  <label style="font-size: 20px; color: gray;">Zeitlimit erreicht</label>
+  <h1 id="gameOverScore" style="margin-bottom: 0; margin-top: 8px;">0</h1>
+  <p style="margin-top: 0; font-size: 20px; color: gray">Punkte</p>
+  <button id="scoreButton2" style="display: none;width: 20%; left: 50%; transform: translate(-50%, 0%); position: relative; display: block; margin-top: 12px; background-color: rgb(0,191,255); border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Highscore Liste</button>
+  <button id="againButton" style="left: 50%; transform: translate(-50%, 0%);display: block;position: relative; width: 20%;margin-top: 12px; background-color: rgb(0,191,255); border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Neue Runde</button>
+  <input type="text" id="userInput" name="user" placeholder="Name" style="left: 50%;position: relative; transform: translate(-50%, 0%);display: block; width: 20%;margin-top: 12px; border-style: none; background-color: rgb(0,191,255); border-radius: 5px; padding: 8px 16px; color: white;">
+  <button id="entryButton" style="width: 20%;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; margin-top: 12px; background-color: rgb(0,191,255); border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Eintragen</button>
+  
+</div>
+
+<div 
+  id="start"
+  style="
+    position: absolute; 
+    background-color: white;
+    padding: 20px;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    border-radius: 5px;
+    display: block;
+    opacity: 0.9;
+  "
+>
+  <h1 id="gameOverScore" style="margin-bottom: 0; margin-top: 8px; font-size: 34px;">Bubble Stars</h1>
+  <p id="gameOverScore" style="margin-bottom: 0; margin-top: 0px; font-size: 14px;">made in 24H</p>
+  <button id="startButton" style="width: 20%; left: 50%; transform: translate(-50%, 0%); position: relative; display: block; margin-top: 12px; background-color: rgb(0,191,255); border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Starte das Spiel!</button>
+  <button id="scoreButton" style="width: 20%; left: 50%; transform: translate(-50%, 0%); position: relative; display: block; margin-top: 12px; background-color: rgb(0,191,255); border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Highscore Liste</button>
+</div>
+<div 
+  id="leaderboard" 
+  style="
+    position: absolute; 
+    display: none; 
+    max-width: 700px; 
+    width: 100%;
+    background-color: rgb(5, 30, 62);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    padding: 20px;
+    border-radius: 5px;
+    opacity: 0.9;
+    color: white;
+    font-size: 20;
+  ">
+  <div id="lb1" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb2" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb3" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb4" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb5" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb6" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb7" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb8" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb9" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <div id="lb10" style="border-radius: 5px;left: 50%; transform: translate(-50%, 0%); position: relative; display: block; padding: 5px;margin: 5px; width: 80%;background-color: rgb(37, 30, 62);">
+    <p style="text-align: center;">1. Patrick 20 Punkte</p>
+  </div>
+  <button id="backButton" style="left: 50%; transform: translate(-50%, 0%); position: relative; display: block; margin-top: 12px; background-color: rgb(0,191,255); border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Zurück</button>
+
+</div>
+<canvas id="canvas" style="cursor: none;"></canvas>
+<span>Score: <span id="scoreHTML">0</span></span>
+
+<!-------------------------------IMPORTS + CONFIGURATIONS----------------------->  
+<script type="module">
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-analytics.js";
+import { getFirestore, doc, setDoc, addDoc, collection, getDocs, query, updateDoc } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-firestore.js"; 
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore()
+//references
+const gameOverHTML = document.querySelector('#gameOver')
+const scoreButtondHTML = document.querySelector('#scoreButton')
+const scoreButtond2HTML = document.querySelector('#scoreButton2')
+const entryButtondHTML = document.querySelector('#entryButton')
+const startStyleHTML = document.querySelector('#start')
+const leaderboardHTML = document.querySelector('#leaderboard')
+const startButtonHTML = document.querySelector('#startButton')
+const scoreHTML = document.querySelector('#scoreHTML').innerHTML
+const userForm = document.querySelector('#userInput')
+const lb1 = document.querySelector('#lb1')
+const lb2 = document.querySelector('#lb2')
+const lb3 = document.querySelector('#lb3')
+const lb4 = document.querySelector('#lb4')
+const lb5 = document.querySelector('#lb5')
+const lb6 = document.querySelector('#lb6')
+const lb7 = document.querySelector('#lb7')
+const lb8 = document.querySelector('#lb8')
+const lb9 = document.querySelector('#lb9')
+const lb10 = document.querySelector('#lb10')
+//load latest data
+
+let names
+let scores
+let scores2
+let indexes
+let ids 
+
+async function newScore(){
+  var ref = collection(db, "Leaderborad");
+  const docRef = await addDoc(
+    ref, {
+      name: "user",
+      score: 0
+    }
+  ).then(() => {
+    console.log("suc")
+  })
+  .catch((error) => {
+    console.log("err")
+  })
+} 
+
+async function update(user, score){
+  console.log("update")
+  if (user.length > 0){
+    console.log("update")
+    console.log(user)
+    console.log(score)
+    names = []
+    scores = []
+    ids = []
+    let check = false
+    var q = query(collection(db, "Leaderborad"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      names.push(doc.data().name)
+      scores.push(doc.data().score)
+      ids.push(doc.id)
+    });
+    let minScore = Math.min(...scores)
+    let index
+    scores.forEach((num,i) =>{
+      if (num == minScore) index = i
+    })
+    let minName = names[index]
+    const ref = doc(db, "Leaderborad", ids[index]);
+    await updateDoc(ref, {
+      name: user,
+      score: score
+    })
+    .then(() => {
+     audio.win.play()
+     entryButtondHTML.style.display = 'none';
+     userForm.style.display = 'none';
+     scoreButton2dHTML.style.display = 'block'
+    })
+    .catch((error) => {
+      console.log("err")
+    })
+  }
+}
+
+async function getScores(){
+  names = []
+  scores = []
+  scores2 = []
+  indexes = []
+  var q = query(collection(db, "Leaderborad"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    names.push(doc.data().name)
+    scores.push(doc.data().score)
+    scores2.push(doc.data().score)
+  });
+  for (let i = 0; i < 10; i++) {
+    let minScore = Math.max(...scores)
+    const index = scores.findIndex(score => {
+      return score === minScore;
+    });
+    scores[index] = -10
+    indexes.push(index)
+  } 
+  console.log(indexes)
+  console.log(scores2)
+  console.log(names)
+  lb1.innerHTML = names[indexes[0]].toString()+" , "+scores2[indexes[0]].toString()+" Punkte"
+  lb2.innerHTML = names[indexes[1]].toString()+" , "+scores2[indexes[1]].toString()+" Punkte"
+  lb3.innerHTML = names[indexes[2]].toString()+" , "+scores2[indexes[2]].toString()+" Punkte"
+  lb4.innerHTML = names[indexes[3]].toString()+" , "+scores2[indexes[3]].toString()+" Punkte"
+  lb5.innerHTML = names[indexes[4]].toString()+" , "+scores2[indexes[4]].toString()+" Punkte"
+  lb6.innerHTML = names[indexes[5]].toString()+" , "+scores2[indexes[5]].toString()+" Punkte"
+  lb7.innerHTML = names[indexes[6]].toString()+" , "+scores2[indexes[6]].toString()+" Punkte"
+  lb8.innerHTML = names[indexes[7]].toString()+" , "+scores2[indexes[7]].toString()+" Punkte"
+  lb9.innerHTML = names[indexes[8]].toString()+" , "+scores2[indexes[8]].toString()+" Punkte"
+  lb10.innerHTML = names[indexes[9]].toString()+" , "+scores2[indexes[9]].toString()+" Punkte"
+  lb1.style.textAlign = 'center'
+  lb2.style.textAlign = 'center'
+  lb3.style.textAlign = 'center'
+  lb4.style.textAlign = 'center'
+  lb5.style.textAlign = 'center'
+  lb6.style.textAlign = 'center'
+  lb7.style.textAlign = 'center'
+  lb8.style.textAlign = 'center'
+  lb9.style.textAlign = 'center'
+  lb10.style.textAlign = 'center'
+  lb1.style.padding = '10px'
+  lb2.style.padding = '10px'
+  lb3.style.padding = '10px'
+  lb4.style.padding = '10px'
+  lb5.style.padding = '10px'
+  lb6.style.padding = '10px'
+  lb7.style.padding = '10px'
+  lb8.style.padding = '10px'
+  lb9.style.padding = '10px'
+  lb10.style.padding = '10px'
+}
+
+scoreButtondHTML.addEventListener('click', ()=>{
+  getScores().then(()=> {
+    leaderboardHTML.style.display = 'block'
+    startStyleHTML.style.display = 'none'
+  })
+})
+
+scoreButtond2HTML.addEventListener('click', ()=>{
+  getScores().then(()=> {
+    leaderboardHTML.style.display = 'block'
+    gameOverHTML.style.display = 'none'
+  })
+})
+
+entryButtondHTML.addEventListener('click', ()=>{
+  update(userForm.value, globalScore).then(()=> {
+    console.log("nice job duuuude")
+  })
+})
+</script>
+<script 
+  src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.min.js" 
+  integrity="sha512-L6Z/YtIPQ7eU3BProP34WGU5yIRk7tNHk7vaC2dB1Vy1atz6wl9mCkTPPZ2Rn1qPr+vY2mZ9odZLdGYuaBk7dQ==" 
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.2/gsap.min.js"
+  integrity="sha512-kVlGhj2qFy+KBCFuvjBJTGUMxbdqJKs4yK2jh0e0VPhWUPiPC87bzm4THmaaIee3Oj7j6sDpTTgm2EPPiESqBg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script src="./js/canvas.js"></script>
+<script src="./js/audio.js"></script>

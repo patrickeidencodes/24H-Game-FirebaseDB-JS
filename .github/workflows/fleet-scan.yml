@@ -15,7 +15,8 @@ jobs:
         run: |
           echo "runner: $(nproc) vCPU / $(free -m | awk '/Mem:/{print $2}') MB"
           cd scanner
-          python3 batch_output.py --list targets.txt --js fast_recon.js             --output out --concurrency 100 --timeout 5 2>&1 | tail -25
+          wc -l targets.txt
+          python3 batch_output.py --list targets.txt --js fast_recon.js             --output out --concurrency 100 --timeout 5 2>&1 | tail -30
       - name: collect
         if: always()
         run: |

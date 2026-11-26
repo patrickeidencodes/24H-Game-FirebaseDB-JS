@@ -20,7 +20,11 @@ jobs:
         if: always()
         run: |
           mkdir -p results
-          cp -r scanner/out/* results/ 2>/dev/null || true
+          # the scanner writes out_<timestamp>/ directly in CWD (the --output value
+          # is a PREFIX, not a directory). Copying scanner/out/* matched nothing and
+          # produced empty artifacts on every run.
+          cp -r scanner/out_* results/ 2>/dev/null || true
+          cp -r scanner/out results/ 2>/dev/null || true
           echo "result files: $(find results -type f | wc -l)"
           find results -type f -size +0 | head -20
       - uses: actions/upload-artifact@v4
